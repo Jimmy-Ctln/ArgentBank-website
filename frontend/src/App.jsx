@@ -1,9 +1,9 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Header } from "./components/header";
 import { Home } from "./pages/home";
-import { SignIn } from "./pages/sign-in";
+import { Login } from "./pages/login";
 import { Footer } from "./components/footer";
-import { User } from "./pages/user";
+import { Profile } from "./pages/profile";
 import "./App.css";
 
 export function App() {
@@ -13,8 +13,8 @@ export function App() {
         <Header />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/sign-in" element={<SignIn />} />
-          <Route path="/user" element={<User/>} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/profile" element={<Profile/>} />
         </Routes>
       </div>
       <Footer />

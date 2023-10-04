@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
 import "font-awesome/css/font-awesome.min.css";
-import "./sign-in.css";
+import "./login.css";
 
-export function SignIn() {
+export function Login() {
   return (
     <main className="main bg-dark">
       <section className="sign-in-content">
@@ -17,11 +17,11 @@ export function SignIn() {
             <label for="password">Password</label>
             <input type="password" id="password"></input>
           </div>
-          <div class="input-remember">
+          <div className="input-remember">
             <input type="checkbox" id="remember-me"></input>
             <label for="remember-me">Remember me</label>
           </div>
-          <Link className="sign-in-button" to="/user">
+          <Link className="sign-in-button" to="/profile">
             Sign In
           </Link>
         </form>

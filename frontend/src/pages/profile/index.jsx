@@ -1,7 +1,7 @@
-import "./user.css";
+import "./profile.css";
 import { Account } from "../../account";
 
-export function User() {
+export function Profile() {
   return (
     <main className="main bg-dark">
       <div className="header">
@@ -10,9 +10,9 @@ export function User() {
           <br></br>
           Tony Jarvis!
         </h1>
-        <button class="edit-button">Edit Name</button>
+        <button className="edit-button">Edit Name</button>
       </div>
-      <h2 class="sr-only">Accounts</h2>
+      <h2 className="sr-only">Accounts</h2>
       <Account />
     </main>
   );
