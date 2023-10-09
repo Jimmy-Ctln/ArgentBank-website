@@ -7,7 +7,6 @@ export function Profile() {
 
   const user = useSelector((state) => state.userReducer)
 
-  // if (user.isConnected === true)
 
   return (
     <main className="main bg-dark">

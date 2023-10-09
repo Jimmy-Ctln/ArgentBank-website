@@ -20,10 +20,10 @@ export const userLogin = (postData) => {
           console.log('erreur lors de la tentative de connexion utilisateur')
         }
       })
-      .catch((error) => {
+      .catch((error) => { 
         console.error("Erreur lors de la connexion :", error);
         dispatch({ type: USER_LOGIN_ERROR, payload: {
-          message: error.message
+          message: error.message,
          } });
       });
   };

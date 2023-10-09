@@ -22,10 +22,10 @@ export function Login() {
 
     dispatch(userLogin(postData));
   };
-  
+
   if (user.isConnected) {
-    dispatch(userProfile(user.token))
-    navigate('/profile')
+    dispatch(userProfile(user.token));
+    navigate("/profile");
   }
 
   return (
@@ -33,21 +33,44 @@ export function Login() {
       <section className="sign-in-content">
         <i className="fa fa-user-circle sign-in-icon"></i>
         <h1>Sign in</h1>
-        <form ref={form} onSubmit={(e) => handleForm(e)}>
-          <div className="input-wrapper">
-            <label htmlFor="username">Email</label>
-            <input type="text" id="username" />
-          </div>
-          <div className="input-wrapper">
-            <label htmlFor="password">Password</label>
-            <input type="password" id="password" />
-          </div>
-          <div className="input-remember">
-            <input type="checkbox" id="remember-me" />
-            <label htmlFor="remember-me">Remember me</label>
-          </div>
-          <button className="sign-in-button">Sign In</button>
-        </form>
+        {user.errorLogin ? (
+          <>
+            <div className="error-login-container">
+              <p className="error-login-message">Erreur d'email ou de mot de passe</p>
+            </div>
+            <form ref={form} onSubmit={(e) => handleForm(e)}>
+              <div className="input-wrapper">
+                <label htmlFor="username">Email</label>
+                <input type="text" id="username" />
+              </div>
+              <div className="input-wrapper">
+                <label htmlFor="password">Password</label>
+                <input type="password" id="password" />
+              </div>
+              <div className="input-remember">
+                <input type="checkbox" id="remember-me" />
+                <label htmlFor="remember-me">Remember me</label>
+              </div>
+              <button className="sign-in-button">Sign In</button>
+            </form>
+          </>
+        ) : (
+          <form ref={form} onSubmit={(e) => handleForm(e)}>
+            <div className="input-wrapper">
+              <label htmlFor="username">Email</label>
+              <input type="text" id="username" />
+            </div>
+            <div className="input-wrapper">
+              <label htmlFor="password">Password</label>
+              <input type="password" id="password" />
+            </div>
+            <div className="input-remember">
+              <input type="checkbox" id="remember-me" />
+              <label htmlFor="remember-me">Remember me</label>
+            </div>
+            <button className="sign-in-button">Sign In</button>
+          </form>
+        )}
       </section>
     </main>
   );

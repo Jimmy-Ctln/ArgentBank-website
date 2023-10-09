@@ -3,6 +3,7 @@ import { USER_LOGOUT } from "../components/nav";
 
 export const initialState = {
   isConnected: false,
+  errorLogin: false,
 };
 
 export function userReducer(state = initialState, action) {
@@ -12,12 +13,14 @@ export function userReducer(state = initialState, action) {
         ...state,
         token: action.payload.token,
         status: action.payload.status,
-        isConnected: true
+        isConnected: true,
+        errorLogin: false,
       };
     case USER_LOGIN_ERROR:
       return {
         ...state,
-        message: action.payload
+        message: action.payload,
+        errorLogin: true,
       }
     case USER_PROFILE:
       return { 

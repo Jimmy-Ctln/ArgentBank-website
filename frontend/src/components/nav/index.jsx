@@ -33,7 +33,7 @@ export function Nav() {
       <div className="container-nav">
         {user.isConnected ? (
           <>
-            <div className="main-nav-item" onClick={() => handleLogout()}>
+            <div className="main-nav-item">
               <i className="fa fa-user-circle"></i>
               {user.profileUser ? user.profileUser.firstName : 'Loading..'}{user.profileUser ? user.profileUser.lastName : 'Loading..'}
             </div>
