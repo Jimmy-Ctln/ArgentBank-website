@@ -3,6 +3,7 @@ import axios from "axios";
 export const USER_LOGIN = "USER_LOGIN";
 export const USER_LOGIN_ERROR = "USER_LOGIN_ERROR";
 export const USER_PROFILE = "USER_PROFILE";
+export const CHANGE_USER_NAME = "CHANGE_USER_NAME";
 
 // Envoie une demande de connexion avec l'email et le mot de passe de l'utilisateur
 
@@ -48,7 +49,28 @@ export const userProfile = (token) => {
         }
       })
       .catch((error) => {
-        console.log("Erreur lors de la récupération du profil user:", error);
+        console.log("Error retrieving user profile:", error);
+      });
+  };
+};
+
+export const changeUserName = (token, postData) => {
+  const Authorization = (axios.defaults.headers.common[
+    "Authorization"
+  ] = `Bearer ${token}`);
+
+  return (dispatch) => {
+    return axios
+      .put("http://localhost:3001/api/v1/user/profile", postData, Authorization)
+      .then((res) => {
+        const status = res.data.status;
+
+        if (status === 200) {
+          dispatch({ type: CHANGE_USER_NAME, payload: postData.userName });
+        }
+      })
+      .catch((error) => {
+        console.log("Error when changing name use: ", error);
       });
   };
 };
