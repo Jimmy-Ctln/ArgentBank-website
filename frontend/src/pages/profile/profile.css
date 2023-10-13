@@ -18,3 +18,62 @@
   font-weight: bold;
   padding: 10px;
 }
+
+.form-user-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  align-content: center;
+}
+
+.form-user-info input,
+button {
+  outline: none;
+  border: none;
+}
+
+.user-info {
+  display: flex;
+  justify-content: center;
+  width: 50%;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.input-info {
+  padding: 5px 8px;
+  border-radius: 2px;
+}
+
+.input-active {
+  cursor: pointer;
+}
+
+.button-form {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  align-content: center;
+}
+
+.btn-save {
+  cursor: pointer;
+  width: 10%;
+  background-color: #06d6a0;
+  border-radius: 5px;
+}
+
+.btn-cancle {
+  cursor: pointer;
+  width: 10%;
+  background-color: #06d6a0;
+  border-radius: 5px;
+  padding: 10px 8px;
+  outline: none;
+}
+
+button {
+  outline: none;
+}

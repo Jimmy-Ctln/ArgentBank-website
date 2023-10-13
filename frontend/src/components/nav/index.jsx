@@ -11,12 +11,13 @@ export const USER_LOGOUT = "USER_LOGOUT";
 
 export function Nav() {
   const user = useSelector((state) => state.userReducer);
-  const userName = useSelector((state) => state.userName)
+  const userNameDisplay = user.newUserName ? user.newUserName : (user.profileUser ? user.profileUser.userName : 'loading...')
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    dispatch({ type: USER_LOGOUT, payload: { isConnected: false } });
+    dispatch({ type: USER_LOGOUT, payload: "user logout" });
     navigate("/");
   };
 
@@ -35,7 +36,7 @@ export function Nav() {
           <>
             <div className="main-nav-item">
               <i className="fa fa-user-circle"></i>
-              {userName ? userName : (user.profileUser ? user.profileUser.userName : "Loading...")}
+              {userNameDisplay}
             </div>
             <div className="main-nav-item" onClick={() => handleLogout()}>
             <FontAwesomeIcon icon={faPowerOff }/>

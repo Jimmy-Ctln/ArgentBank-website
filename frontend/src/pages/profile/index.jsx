@@ -11,15 +11,15 @@ export function Profile() {
   const [displayForm, setDisplayForm] = useState(false);
   
   const user = useSelector((state) => state.userReducer);
-  const userName = useSelector((state) => state.userName)
+  const userNameDisplay = user.newUserName ? user.newUserName : (user.profileUser ? user.profileUser.userName : 'loading...')
 
-  const handleClickCancel = () => {
-    setDisplayForm(!displayForm);
+  const handleClickEdit = () => {
+    setDisplayForm(true);
   };
 
-  const handleClickSave = () => {
-    
-  }
+  const handleClickCancel = () => {
+    setDisplayForm(false);
+  };
 
   const handleForm = (e) => {
     e.preventDefault();
@@ -29,7 +29,7 @@ export function Profile() {
     };
 
    dispatch(changeUserName(user.token, postData));
-
+   setDisplayForm(false)
   };
 
   return (
@@ -41,32 +41,38 @@ export function Profile() {
               Edit user info
               <br></br>
             </h1>
-            <form ref={form} onSubmit={(e) => handleForm(e)}>
-              <div className="input-user-info">
+            <form className="form-user-info" ref={form} onSubmit={(e) => handleForm(e)}>
+              <div className="user-info">
                 <label htmlFor="username">User name: </label>
-                <input type="text" id="username" placeholder={user.profileUser.userName} />
+                <input 
+                className="input-info"
+                type="text" 
+                id="username" 
+                placeholder={userNameDisplay} />
               </div>
-              <div className="input-user-info">
+              <div className="user-info">
                 <label htmlFor="first-name">First name: </label>
                 <input
+                  className="input-info"
                   type="first-name"
                   id="first-name"
                   placeholder={user.profileUser.firstName}
                   disabled
                 />
               </div>
-              <div className="input-user-info">
+              <div className="user-info">
                 <label htmlFor="last-name">Last name: </label>
                 <input
+                  className="input-info"
                   type="last-name"
                   id="last-name"
                   placeholder={user.profileUser.lastName}
                   disabled
                 />
               </div>
-              <div>
-                <button className="btn-save" onClick={handleClickSave}>Save</button>
-                <button className="btn-cancle" onClick={handleClickCancel}>
+              <div className="button-form">
+                <button className="btn-save">Save</button>
+                <button className="btn-cancle" type="button"  onClick={handleClickCancel}>
                   Cancel
                 </button>
               </div>
@@ -77,9 +83,9 @@ export function Profile() {
             <h1>
               Welcome back
               <br></br>
-              {userName ? userName : (user.profileUser ? user.profileUser.userName : "Loading...")}
+              {userNameDisplay}
             </h1>
-            <button className="edit-button" onClick={handleClickCancel}>
+            <button className="edit-button" onClick={handleClickEdit}>
               Edit Name
             </button>
           </>

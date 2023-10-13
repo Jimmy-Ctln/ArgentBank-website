@@ -2,7 +2,7 @@ import "font-awesome/css/font-awesome.min.css";
 import "./login.css";
 import { useRef } from "react";
 import { useDispatch } from "react-redux";
-import { userLogin, userProfile } from "../../actions/user.action";
+import { userLogin } from "../../actions/user.action";
 import { useSelector } from "react-redux/es/hooks/useSelector";
 import { useNavigate } from "react-router-dom";
 
@@ -24,7 +24,6 @@ export function Login() {
   };
 
   if (user.isConnected) {
-    dispatch(userProfile(user.token));
     navigate("/profile");
   }
 
@@ -36,7 +35,9 @@ export function Login() {
         {user.errorLogin ? (
           <>
             <div className="error-login-container">
-              <p className="error-login-message">Erreur d'email ou de mot de passe</p>
+              <p className="error-login-message">
+                Erreur d'email ou de mot de passe
+              </p>
             </div>
             <form ref={form} onSubmit={(e) => handleForm(e)}>
               <div className="input-wrapper">

@@ -1,4 +1,9 @@
-import { CHANGE_USER_NAME, USER_LOGIN, USER_LOGIN_ERROR, USER_PROFILE } from "../actions/user.action";
+import {
+  CHANGE_USER_NAME,
+  USER_LOGIN,
+  USER_LOGIN_ERROR,
+  USER_PROFILE,
+} from "../actions/user.action";
 import { USER_LOGOUT } from "../components/nav";
 
 export const initialState = {
@@ -21,21 +26,21 @@ export function userReducer(state = initialState, action) {
         ...state,
         message: action.payload,
         errorLogin: true,
-      }
+      };
     case USER_PROFILE:
-      return { 
+      return {
         ...state,
-        profileUser: action.payload,
-    };
+        profileUser: action.payload.profileUser,
+      };
     case USER_LOGOUT:
       return {
-        initialState
-      }
+        initialState,
+      };
     case CHANGE_USER_NAME:
       return {
         ...state,
-        userName: action.payload
-      }
+        newUserName: action.payload.newUserName,
+      };
     default:
       return state;
   }

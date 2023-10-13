@@ -1,11 +1,10 @@
 import axios from "axios";
-
 export const USER_LOGIN = "USER_LOGIN";
 export const USER_LOGIN_ERROR = "USER_LOGIN_ERROR";
 export const USER_PROFILE = "USER_PROFILE";
 export const CHANGE_USER_NAME = "CHANGE_USER_NAME";
 
-// Envoie une demande de connexion avec l'email et le mot de passe de l'utilisateur
+// Sends a connection request with the user's email address and password
 
 export const userLogin = (postData) => {
   return (dispatch) => {
@@ -17,20 +16,22 @@ export const userLogin = (postData) => {
 
         if (status === 200) {
           dispatch({ type: USER_LOGIN, payload: { token, status } });
-        } else {
-          console.log('erreur lors de la tentative de connexion utilisateur')
+          dispatch(userProfile(token));
         }
       })
-      .catch((error) => { 
-        console.error("Erreur lors de la connexion :", error);
-        dispatch({ type: USER_LOGIN_ERROR, payload: {
-          message: error.message,
-         } });
+      .catch((error) => {
+        console.error("Connection error :", error);
+        dispatch({
+          type: USER_LOGIN_ERROR,
+          payload: {
+            message: error.message,
+          },
+        });
       });
   };
 };
 
-// Pour récupérer le profil de l'utilisateur connecté
+// Api call to retrieve the profile of the connected user
 
 export const userProfile = (token) => {
   const Authorization = (axios.defaults.headers.common[
@@ -45,7 +46,12 @@ export const userProfile = (token) => {
         const status = res.data.status;
 
         if (status === 200) {
-          dispatch({ type: USER_PROFILE, payload: profileUser });
+          dispatch({
+            type: USER_PROFILE,
+            payload: {
+              profileUser: profileUser,
+            },
+          });
         }
       })
       .catch((error) => {
@@ -53,6 +59,8 @@ export const userProfile = (token) => {
       });
   };
 };
+
+// Api call to modify the user name
 
 export const changeUserName = (token, postData) => {
   const Authorization = (axios.defaults.headers.common[
@@ -66,7 +74,10 @@ export const changeUserName = (token, postData) => {
         const status = res.data.status;
 
         if (status === 200) {
-          dispatch({ type: CHANGE_USER_NAME, payload: postData.userName });
+          dispatch({
+            type: CHANGE_USER_NAME,
+            payload: { newUserName: postData.userName },
+          });
         }
       })
       .catch((error) => {
