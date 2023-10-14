@@ -17,6 +17,7 @@ export const userLogin = (postData) => {
         if (status === 200) {
           dispatch({ type: USER_LOGIN, payload: { token, status } });
           dispatch(userProfile(token));
+          localStorage.setItem("token", token)
         }
       })
       .catch((error) => {

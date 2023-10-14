@@ -9,8 +9,8 @@ import { useNavigate } from "react-router-dom";
 export function Login() {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.userReducer);
-  const navigate = useNavigate();
   const form = useRef();
+  const navigate = useNavigate();
 
   const handleForm = (e) => {
     e.preventDefault();
@@ -23,9 +23,9 @@ export function Login() {
     dispatch(userLogin(postData));
   };
 
-  if (user.isConnected) {
-    navigate("/profile");
-  }
+  // if (user.isConnected) {
+  //   navigate("/profile");
+  // }
 
   return (
     <main className="main bg-dark">
@@ -46,7 +46,7 @@ export function Login() {
               </div>
               <div className="input-wrapper">
                 <label htmlFor="password">Password</label>
-                <input type="password" id="password" />
+                <input type="password" id="password"/>
               </div>
               <div className="input-remember">
                 <input type="checkbox" id="remember-me" />

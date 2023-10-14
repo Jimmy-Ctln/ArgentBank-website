@@ -19,6 +19,7 @@ export function Nav() {
   const handleLogout = () => {
     dispatch({ type: USER_LOGOUT, payload: "user logout" });
     navigate("/");
+    localStorage.removeItem('token')
   };
 
   return (
