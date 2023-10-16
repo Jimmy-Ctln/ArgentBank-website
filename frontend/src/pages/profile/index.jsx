@@ -3,14 +3,14 @@ import { Account } from "../../account";
 import { useSelector } from "react-redux/es/hooks/useSelector";
 import { useState, useRef } from "react";
 import { useDispatch } from "react-redux";
-import { changeUserName } from "../../actions/user.action";
+import { modifyUserName } from "../../actions/user.action";
 
 export function Profile() {
   const dispatch = useDispatch()
   const form = useRef();
   const [displayForm, setDisplayForm] = useState(false);
   
-  const user = useSelector((state) => state.userReducer);
+  const user = useSelector((state) => state.userSlice);
   const userNameDisplay = user.newUserName ? user.newUserName : (user.profileUser ? user.profileUser.userName : 'loading...')
 
   const handleClickEdit = () => {
@@ -23,12 +23,15 @@ export function Profile() {
 
   const handleForm = (e) => {
     e.preventDefault();
+    
+    const pseudoDefault = `${user.profileUser.firstName}_${user.profileUser.lastName}`
+    const userName = form.current[0].value !== "" ? form.current[0].value : pseudoDefault
 
     const postData = {
-      userName: form.current[0].value,
+      userName: userName,
     };
 
-   dispatch(changeUserName(user.token, postData));
+   dispatch(modifyUserName(user.token, postData));
    setDisplayForm(false)
   };
 
@@ -47,8 +50,9 @@ export function Profile() {
                 <input 
                 className="input-info"
                 type="text" 
-                id="username" 
-                placeholder={userNameDisplay} />
+                id="username"
+                placeholder={userNameDisplay}
+                 />
               </div>
               <div className="user-info">
                 <label htmlFor="first-name">First name: </label>

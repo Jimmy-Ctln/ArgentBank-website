@@ -1,12 +1,9 @@
 import axios from "axios";
-export const USER_LOGIN = "USER_LOGIN";
-export const USER_LOGIN_ERROR = "USER_LOGIN_ERROR";
-export const USER_PROFILE = "USER_PROFILE";
-export const CHANGE_USER_NAME = "CHANGE_USER_NAME";
+import { userLogin, userProfile, userLoginError, changeUserName } from "../features/userSlice";
 
 // Sends a connection request with the user's email address and password
 
-export const userLogin = (postData) => {
+export const userFetch = (postData) => {
   return (dispatch) => {
     return axios
       .post("http://localhost:3001/api/v1/user/login", postData)
@@ -15,26 +12,23 @@ export const userLogin = (postData) => {
         const status = res.data.status;
 
         if (status === 200) {
-          dispatch({ type: USER_LOGIN, payload: { token, status } });
-          dispatch(userProfile(token));
+          dispatch(userLogin({token, status}))
+          dispatch(FetchProfileUser(token));
           localStorage.setItem("token", token)
         }
       })
       .catch((error) => {
         console.error("Connection error :", error);
-        dispatch({
-          type: USER_LOGIN_ERROR,
-          payload: {
-            message: error.message,
-          },
-        });
+        dispatch(userLoginError({
+          error
+        }));
       });
   };
 };
 
 // Api call to retrieve the profile of the connected user
 
-export const userProfile = (token) => {
+export const FetchProfileUser = (token) => {
   const Authorization = (axios.defaults.headers.common[
     "Authorization"
   ] = `Bearer ${token}`);
@@ -47,12 +41,7 @@ export const userProfile = (token) => {
         const status = res.data.status;
 
         if (status === 200) {
-          dispatch({
-            type: USER_PROFILE,
-            payload: {
-              profileUser: profileUser,
-            },
-          });
+          dispatch(userProfile(profileUser));
         }
       })
       .catch((error) => {
@@ -63,7 +52,7 @@ export const userProfile = (token) => {
 
 // Api call to modify the user name
 
-export const changeUserName = (token, postData) => {
+export const modifyUserName = (token, postData) => {
   const Authorization = (axios.defaults.headers.common[
     "Authorization"
   ] = `Bearer ${token}`);
@@ -75,10 +64,9 @@ export const changeUserName = (token, postData) => {
         const status = res.data.status;
 
         if (status === 200) {
-          dispatch({
-            type: CHANGE_USER_NAME,
-            payload: { newUserName: postData.userName },
-          });
+          dispatch(changeUserName({
+            newUserName: postData.userName
+          }));
         }
       })
       .catch((error) => {

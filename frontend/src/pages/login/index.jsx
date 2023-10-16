@@ -2,14 +2,18 @@ import "font-awesome/css/font-awesome.min.css";
 import "./login.css";
 import { useRef } from "react";
 import { useDispatch } from "react-redux";
-import { userLogin } from "../../actions/user.action";
 import { useSelector } from "react-redux/es/hooks/useSelector";
 import { useNavigate } from "react-router-dom";
 
+import { userFetch } from "../../actions/user.action";
+
 export function Login() {
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.userReducer);
+  
+  const user = useSelector((state) => state.userSlice);
+  
   const form = useRef();
+  
   const navigate = useNavigate();
 
   const handleForm = (e) => {
@@ -20,12 +24,12 @@ export function Login() {
       password: form.current[1].value,
     };
 
-    dispatch(userLogin(postData));
+    dispatch(userFetch(postData));
   };
 
-  // if (user.isConnected) {
-  //   navigate("/profile");
-  // }
+  if (user.isConnected) {
+    navigate("/profile");
+  }
 
   return (
     <main className="main bg-dark">
