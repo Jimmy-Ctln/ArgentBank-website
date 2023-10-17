@@ -15,9 +15,12 @@ export function App() {
       <div className="App">
           <Header />
           <Routes>
-            <Route path="/profile" element={<Profile/>}/>
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/profile" element={
+            <PrivateRoute>
+              <Profile/>
+            </PrivateRoute>}/>
           </Routes>
       </div>
       <Footer />
