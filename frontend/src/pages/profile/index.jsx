@@ -1,17 +1,44 @@
 import "./profile.css";
 import { Account } from "../../account";
-import { useSelector } from "react-redux/es/hooks/useSelector";
-import { useState, useRef } from "react";
 import { useDispatch } from "react-redux";
-import { modifyUserName } from "../../actions/user.action";
+import { useSelector } from "react-redux/es/hooks/useSelector";
+import { useState, useRef, useEffect } from "react";
+import { userProfile, changeUserName } from "../../features/userSlice";
+import apiServiceInstance from "../../api-service";
 
 export function Profile() {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
+
+  const user = useSelector((state) => state.userSlice);
+
+  useEffect(() => {
+    const data = {};
+    const FetchProfileUser = async () => {
+      await apiServiceInstance
+        .post("/profile", data, user.token)
+        .then((res) => {
+          const profileUser = res.body;
+          const status = res.status;
+
+          if (status === 200) {
+            dispatch(userProfile(profileUser));
+          }
+        })
+        .catch((error) => {
+          console.log("error recovering user profile ", error);
+        });
+    };
+    FetchProfileUser();
+  }, [dispatch, user.token]);
+
   const form = useRef();
   const [displayForm, setDisplayForm] = useState(false);
-  
-  const user = useSelector((state) => state.userSlice);
-  const userNameDisplay = user.newUserName ? user.newUserName : (user.profileUser ? user.profileUser.userName : 'loading...')
+
+  const userNameDisplay = user.newUserName
+    ? user.newUserName
+    : user.profileUser
+    ? user.profileUser.userName
+    : "loading...";
 
   const handleClickEdit = () => {
     setDisplayForm(true);
@@ -23,16 +50,30 @@ export function Profile() {
 
   const handleForm = (e) => {
     e.preventDefault();
-    
-    const pseudoDefault = `${user.profileUser.firstName}_${user.profileUser.lastName}`
-    const userName = form.current[0].value !== "" ? form.current[0].value : pseudoDefault
+
+    const pseudoDefault = `${user.profileUser.firstName}_${user.profileUser.lastName}`;
+    const userName = form.current[0].value !== "" ? form.current[0].value : pseudoDefault;
 
     const postData = {
       userName: userName,
     };
 
-   dispatch(modifyUserName(user.token, postData));
-   setDisplayForm(false)
+    const modifyUserName = async () => {
+      await apiServiceInstance
+        .put("/profile", postData, user.token)
+        .then((res) => {
+          const status = res.status;
+
+          if (status === 200) {
+            dispatch(changeUserName(postData.userName));
+            setDisplayForm(false);
+          }
+        })
+        .catch((error) => {
+          console.log("Error when changing name use: ", error);
+        });
+    };
+    modifyUserName();
   };
 
   return (
@@ -44,15 +85,19 @@ export function Profile() {
               Edit user info
               <br></br>
             </h1>
-            <form className="form-user-info" ref={form} onSubmit={(e) => handleForm(e)}>
+            <form
+              className="form-user-info"
+              ref={form}
+              onSubmit={(e) => handleForm(e)}
+            >
               <div className="user-info">
                 <label htmlFor="username">User name: </label>
-                <input 
-                className="input-info"
-                type="text" 
-                id="username"
-                placeholder={userNameDisplay}
-                 />
+                <input
+                  className="input-info"
+                  type="text"
+                  id="username"
+                  placeholder={userNameDisplay}
+                />
               </div>
               <div className="user-info">
                 <label htmlFor="first-name">First name: </label>
@@ -76,7 +121,11 @@ export function Profile() {
               </div>
               <div className="button-form">
                 <button className="btn-save">Save</button>
-                <button className="btn-cancle" type="button"  onClick={handleClickCancel}>
+                <button
+                  className="btn-cancle"
+                  type="button"
+                  onClick={handleClickCancel}
+                >
                   Cancel
                 </button>
               </div>

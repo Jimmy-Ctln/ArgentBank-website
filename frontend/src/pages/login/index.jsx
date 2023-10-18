@@ -4,16 +4,16 @@ import { useRef } from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux/es/hooks/useSelector";
 import { useNavigate } from "react-router-dom";
-
-import { userFetch } from "../../actions/user.action";
+import apiServiceInstance from "../../api-service";
+import { userLogin, userLoginError } from "../../features/userSlice";
 
 export function Login() {
   const dispatch = useDispatch();
-  
+
   const user = useSelector((state) => state.userSlice);
-  
+
   const form = useRef();
-  
+
   const navigate = useNavigate();
 
   const handleForm = (e) => {
@@ -24,13 +24,29 @@ export function Login() {
       password: form.current[1].value,
     };
 
-    dispatch(userFetch(postData));
+    const userFetch = async () => {
+      await apiServiceInstance
+        .post("/login", postData)
+        .then((res) => {
+          const token = res.body.token;
+          const status = res.status;
+
+          if (status === 200) {
+            dispatch(userLogin({ token, status }));
+            navigate("/profile");
+          }
+        })
+        .catch((error) => {
+          dispatch(
+            userLoginError({
+              error,
+            })
+          );
+          console.log("Connection error :", error);
+        });
+    };
+    userFetch();
   };
-
-  if (user.isConnected) {
-    navigate("/profile");
-  }
-
   return (
     <main className="main bg-dark">
       <section className="sign-in-content">
@@ -50,7 +66,7 @@ export function Login() {
               </div>
               <div className="input-wrapper">
                 <label htmlFor="password">Password</label>
-                <input type="password" id="password"/>
+                <input type="password" id="password" />
               </div>
               <div className="input-remember">
                 <input type="checkbox" id="remember-me" />

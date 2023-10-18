@@ -26,7 +26,7 @@ export const userSlice = createSlice({
             state.profileUser = action.payload
         },
         changeUserName: (state, action) => {
-            state.newUserName = action.payload.newUserName
+            state.newUserName = action.payload
         }
     }
 })
