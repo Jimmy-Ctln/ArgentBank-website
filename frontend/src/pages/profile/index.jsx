@@ -13,24 +13,28 @@ export function Profile() {
 
   useEffect(() => {
     const data = {};
-    const FetchProfileUser = async () => {
-      await apiServiceInstance
-        .post("/profile", data, user.token)
-        .then((res) => {
-          const profileUser = res.body;
-          const status = res.status;
+    const statusProfileUser = localStorage.getItem("statusProfileUser");
+    if (!user.statusProfileUser && !statusProfileUser) {
+      const FetchProfileUser = async () => {
+        await apiServiceInstance
+          .post("/profile", data, user.token)
+          .then((res) => {
+            const profileUser = res.body;
+            const status = res.status;
 
-          if (status === 200) {
-            dispatch(userProfile(profileUser));
-            localStorage.setItem('profileUser', JSON.stringify(profileUser))
-          }
-        })
-        .catch((error) => {
-          console.log("error recovering user profile ", error);
-        });
-    };
-    FetchProfileUser();
-  }, [dispatch, user.token]);
+            if (status === 200) {
+              dispatch(userProfile({ profileUser, status }));
+              localStorage.setItem("profileUser", JSON.stringify(profileUser));
+              localStorage.setItem("statusProfileUser", status);
+            }
+          })
+          .catch((error) => {
+            console.log("error recovering user profile ", error);
+          });
+      };
+      FetchProfileUser();
+    }
+  }, [dispatch, user.token, user.statusProfileUser]);
 
   const form = useRef();
   const [displayForm, setDisplayForm] = useState(false);
@@ -53,7 +57,8 @@ export function Profile() {
     e.preventDefault();
 
     const pseudoDefault = `${user.profileUser.firstName}_${user.profileUser.lastName}`;
-    const userName = form.current[0].value !== "" ? form.current[0].value : pseudoDefault;
+    const userName =
+      form.current[0].value !== "" ? form.current[0].value : pseudoDefault;
 
     const postData = {
       userName: userName,
@@ -68,7 +73,7 @@ export function Profile() {
           if (status === 200) {
             dispatch(changeUserName(postData.userName));
             setDisplayForm(false);
-            localStorage.setItem('newUserName', postData.userName)
+            localStorage.setItem("newUserName", postData.userName);
           }
         })
         .catch((error) => {

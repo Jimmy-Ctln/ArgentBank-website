@@ -11,7 +11,7 @@ export const userSlice = createSlice({
     reducers: {
         userLogin: (state, action) => {
             state.token = action.payload.token
-            state.status = action.payload.status
+            state.statusLogin = action.payload.status
             state.isConnected = true
             state.errorLogin = false
         },
@@ -23,7 +23,8 @@ export const userSlice = createSlice({
             return initialState
         },
         userProfile: (state, action) => {
-            state.profileUser = action.payload
+            state.profileUser = action.payload.profileUser
+            state.statusProfileUser = action.payload.status
         },
         changeUserName: (state, action) => {
             state.newUserName = action.payload

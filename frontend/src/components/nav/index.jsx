@@ -19,9 +19,7 @@ export function Nav() {
   const handleLogout = () => {
     dispatch(userLogout());
     navigate("/");
-    localStorage.removeItem('token')
-    localStorage.removeItem('profileUser')
-    localStorage.removeItem('newUserName')
+    localStorage.clear();
   };
 
   return (

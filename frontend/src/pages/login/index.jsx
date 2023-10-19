@@ -35,6 +35,7 @@ export function Login() {
             dispatch(userLogin({ token, status }));
             navigate("/profile");
             localStorage.setItem("token", token)
+            localStorage.setItem("statusLogin", status)
           }
         })
         .catch((error) => {

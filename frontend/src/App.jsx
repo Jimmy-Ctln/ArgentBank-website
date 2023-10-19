@@ -15,10 +15,13 @@ export function App() {
 
   useEffect(() => {
     const token = localStorage.getItem("token");
+    const status = localStorage.getItem("statusLogin");
     const profileUser = localStorage.getItem("profileUser");
+    const statusProfileUser = localStorage.getItem("statusProfileUser");
+
     if (token && profileUser) {
-      dispatch(userLogin({ token }));
-      dispatch(userProfile(JSON.parse(profileUser)));
+      dispatch(userLogin({ token, status }));
+      dispatch(userProfile({ profileUser: JSON.parse(profileUser), status: statusProfileUser }));
     }
   }, [dispatch]);
 
