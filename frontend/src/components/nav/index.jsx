@@ -20,6 +20,8 @@ export function Nav() {
     dispatch(userLogout());
     navigate("/");
     localStorage.removeItem('token')
+    localStorage.removeItem('profileUser')
+    localStorage.removeItem('newUserName')
   };
 
   return (
@@ -35,10 +37,10 @@ export function Nav() {
       <div className="container-nav">
         {user.isConnected ? (
           <>
-            <div className="main-nav-item">
+            <Link className="main-nav-item" to='/profile'>
               <i className="fa fa-user-circle"></i>
               {userNameDisplay}
-            </div>
+            </Link>
             <div className="main-nav-item" onClick={() => handleLogout()}>
             <FontAwesomeIcon icon={faPowerOff }/>
               Logout

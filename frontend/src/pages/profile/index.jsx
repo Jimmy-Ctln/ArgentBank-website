@@ -22,6 +22,7 @@ export function Profile() {
 
           if (status === 200) {
             dispatch(userProfile(profileUser));
+            localStorage.setItem('profileUser', JSON.stringify(profileUser))
           }
         })
         .catch((error) => {
@@ -67,6 +68,7 @@ export function Profile() {
           if (status === 200) {
             dispatch(changeUserName(postData.userName));
             setDisplayForm(false);
+            localStorage.setItem('newUserName', postData.userName)
           }
         })
         .catch((error) => {
