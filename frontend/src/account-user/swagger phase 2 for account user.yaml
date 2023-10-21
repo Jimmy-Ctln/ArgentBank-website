@@ -1,0 +1,305 @@
+swagger: '2.0'
+info:
+  title: Bank Argent API documentation
+  description: Contains all available API endpoints in this codebase
+  version: '1.0.0'
+  termsOfService: 'http://swagger.io/terms/'
+host: localhost:3001
+basePath: /api/v1
+schemes:
+  - http
+paths:
+  /user/accounts:
+    get:
+      parameters:
+      - in: header
+        name: token
+        type: integer
+        description: token of the account
+        required: true
+      security:
+        - Bearer: []
+      tags:
+        - Accounts Module
+      summary: Accounts
+      description: API for Account
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: GET Accounts Successfully
+          schema:
+            $ref: '#/definitions/AccountsResponse'
+        '400':
+          description: Invalid Fields
+        '500':
+          description: Internal Server Error
+  /user/accounts/{accountId}:
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - Accounts Module
+      summary: Account detail
+      description: API for retrieving account details
+      parameters:
+      - in: header
+        name: token
+        type: integer
+        description: token of the account
+        required: true
+      - in: path
+        name: accountId
+        type: integer
+        description: accountId of the account
+        required: true
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: User account details have been successfully retrieved
+          schema:
+            $ref: '#/definitions/Account'
+        '400':
+          description: Invalid Fields
+        '500':
+          description: Internal Server Error
+  /user/accounts/{accountId}/transactions:
+      get:
+        security:
+          - Bearer: []
+        tags:
+          - Accounts Module
+        summary: Account detail
+        description: API for retrieving account details
+        parameters:
+        - in: header
+          name: token
+          type: integer
+          description: token of the account
+          required: true
+        - in: path
+          name: accountId
+          type: integer
+          description: ID of the account
+          required: true
+        produces:
+          - application/json
+        responses:
+          '200':
+            description: User account details have been successfully retrieved
+            schema:
+              $ref: '#/definitions/AccountWithTransactionsResponse'
+          '400':
+            description: Invalid Fields
+          '500':
+            description: Internal Server Error
+  /user/accounts/{accountId}/transactions/{transactionId}:
+      get:
+        security:
+          - Bearer: []
+        tags:
+          - Accounts Module
+        summary: Account detail
+        description: API for retrieving account details
+        parameters:
+        - in: header
+          name: token
+          type: integer
+          description: token of the account
+          required: true
+        - in: path
+          name: accountId
+          type: integer
+          description: accountId of the account
+          required: true
+        - in: path
+          name: transactionId
+          type: integer
+          description: transactionId of the account
+          required: true
+        produces:
+          - application/json
+        responses:
+          '200':
+            description: User account details have been successfully retrieved
+            schema:
+              $ref: '#/definitions/Transaction'
+          '400':
+            description: Invalid Fields
+          '500':
+            description: Internal Server Error
+  /user/accounts/{accountId}/transactions/{transactionId}/{categoryId}:
+    patch:
+      parameters:
+        - in: header
+          name: token
+          type: integer
+          description: token of the account
+          required: true
+        - in: path
+          name: accountId
+          type: integer
+          description: accountId of the account
+          required: true
+        - in: path
+          name: categoryId
+          type: integer
+          description: categoryId of the account
+          required: true
+        - in: path
+          name: transactionId
+          type: integer
+          description: transactionId of the account
+          required: true
+        - in: body
+          name: category
+          description: category of the transaction
+          schema: 
+            $ref: '#/definitions/Category'
+      security: 
+        - Bearer: []
+      tags:
+        - Accounts Module
+      summary: Change the transaction category
+      description: API for change the transaction category
+      produces:
+        - application/merge-patch+json
+      responses:
+        '200':
+          description: The category has been modified
+          schema:
+            $ref: '#/definitions/Transaction'
+        '400':
+          description: Invalid Fields
+        '500':
+          description: Internal Server Error
+  /user/accounts/{accountId}/transactions/{transactionId}/note:
+    patch:
+      parameters:
+        - in: header
+          name: user token
+          type: integer
+          description: token of the account
+          required: true
+        - in: path
+          name: accountId
+          type: integer
+          description: accountId of the account
+          required: true
+        - in: path
+          name: transactionId
+          type: integer
+          description: transactionId of the account
+          required: true
+        - in: body
+          name: note
+          description: category of the transaction 
+          schema: 
+            $ref: '#/definitions/Note'
+      security: 
+        - Bearer: []
+      tags:
+        - Accounts Module
+      summary: Change the transaction category
+      description: API for change the transaction category
+      produces:
+        - application/merge-patch+json
+      responses:
+        '200':
+          description: The category has been modified
+          schema:
+            $ref: '#/definitions/Transaction'
+        '400':
+          description: Invalid Fields
+        '500':
+          description: Internal Server Error
+securityDefinitions:
+  Bearer:
+    type: apiKey
+    name: Authorization
+    in: header
+
+
+definitions:
+
+  AccountsResponse:
+    type: object
+    properties:
+      accounts:
+        type: array
+        items:
+          $ref: '#/definitions/Account'
+  
+  Account:
+    type: object
+    properties:
+      accountId:
+        type: number
+        description: account id
+      name:
+        type: string
+        description: account name
+      balance:
+        type: number
+        description: account balance
+        
+        
+  AccountWithTransactionsResponse:
+    type: object
+    properties:
+      transactions:
+        type: array
+        items:
+           $ref: '#/definitions/Transaction'
+      
+  Transaction:
+    type: object
+    properties:
+      transactionId:
+        type: number
+      date:
+        type: number
+        description: transaction date
+      description:
+        type: string
+        description: transaction description
+      amount:
+        type: number
+        description: amount number
+      balance:
+        type: number
+        description: balance number
+      transactionType:
+        type: string
+        description: transaction type
+      category:
+        type: array
+        items:
+          type: object
+          properties:
+            categoryId:
+              type: number
+            label:
+              type: string
+      note:
+        type: string
+
+        
+  Category:
+    type: object
+    properties:
+      categoryId:
+        type: number
+        
+  Note:
+    type: object
+    properties:
+      note:
+        type: "string"
+        
+
+  
+
+
+   
