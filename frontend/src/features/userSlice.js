@@ -3,6 +3,7 @@ import { createSlice } from '@reduxjs/toolkit'
 const initialState = {
     isConnected: false,
     errorLogin: false
+
 }
 
 export const userSlice = createSlice({
@@ -20,6 +21,7 @@ export const userSlice = createSlice({
             state.errorLogin = true
         },
         userLogout: () => {
+            localStorage.clear();
             return initialState
         },
         userProfile: (state, action) => {

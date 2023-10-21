@@ -19,7 +19,6 @@ export function Nav() {
   const handleLogout = () => {
     dispatch(userLogout());
     navigate("/");
-    localStorage.clear();
   };
 
   return (
