@@ -1,20 +1,26 @@
 import "font-awesome/css/font-awesome.min.css";
 import "./login.css";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux/es/hooks/useSelector";
 import { useNavigate } from "react-router-dom";
 import apiServiceInstance from "../../api-service";
-import { userLogin, userLoginError } from "../../features/userSlice";
+import {
+  userLogin,
+  userLoginError,
+  remerberMe,
+} from "../../features/userSlice";
 
 export function Login() {
   const dispatch = useDispatch();
-
   const user = useSelector((state) => state.userSlice);
-
   const form = useRef();
-
   const navigate = useNavigate();
+  const [remember, setRemember] = useState(false);
+
+  const handleRemember = () => {
+    setRemember(!remember);
+  };
 
   const handleForm = (e) => {
     e.preventDefault();
@@ -34,8 +40,11 @@ export function Login() {
           if (status === 200) {
             dispatch(userLogin({ token, status }));
             navigate("/profile");
-            localStorage.setItem("token", token)
-            localStorage.setItem("statusLogin", status)
+            if (remember) {
+              localStorage.setItem("token", token);
+              localStorage.setItem("statusLogin", status);
+              dispatch(remerberMe(true));
+            }
           }
         })
         .catch((error) => {
@@ -49,6 +58,7 @@ export function Login() {
     };
     userFetch();
   };
+
   return (
     <main className="main bg-dark">
       <section className="sign-in-content">
@@ -88,7 +98,11 @@ export function Login() {
               <input type="password" id="password" />
             </div>
             <div className="input-remember">
-              <input type="checkbox" id="remember-me" />
+              <input
+                type="checkbox"
+                id="remember-me"
+                onChange={handleRemember}
+              />
               <label htmlFor="remember-me">Remember me</label>
             </div>
             <button className="sign-in-button">Sign In</button>

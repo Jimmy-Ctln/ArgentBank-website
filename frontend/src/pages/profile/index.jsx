@@ -24,8 +24,10 @@ export function Profile() {
 
             if (status === 200) {
               dispatch(userProfile({ profileUser, status }));
-              localStorage.setItem("profileUser", JSON.stringify(profileUser));
-              localStorage.setItem("statusProfileUser", status);
+              if(user.remerberMe) {
+                localStorage.setItem("profileUser", JSON.stringify(profileUser));
+                localStorage.setItem("statusProfileUser", status);
+              }
             }
           })
           .catch((error) => {
@@ -34,7 +36,7 @@ export function Profile() {
       };
       FetchProfileUser();
     }
-  }, [dispatch, user.token, user.statusProfileUser]);
+  }, [dispatch, user.token, user.statusProfileUser, user.remerberMe]);
 
   const form = useRef();
   const [displayForm, setDisplayForm] = useState(false);
@@ -73,7 +75,9 @@ export function Profile() {
           if (status === 200) {
             dispatch(changeUserName(postData.userName));
             setDisplayForm(false);
-            localStorage.setItem("newUserName", postData.userName);
+            if(user.remerberMe) {
+              localStorage.setItem("newUserName", postData.userName)
+            }
           }
         })
         .catch((error) => {

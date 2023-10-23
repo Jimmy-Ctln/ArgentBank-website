@@ -8,7 +8,7 @@ import { PrivateRoute } from "./utils/privateRoute";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import "./App.css";
-import { userLogin, userProfile, changeUserName } from "./features/userSlice";
+import { userLogin, userProfile, changeUserName, remerberMe } from "./features/userSlice";
 
 export function App() {
   const dispatch = useDispatch();
@@ -18,21 +18,19 @@ export function App() {
     const status = localStorage.getItem("statusLogin");
     const profileUser = localStorage.getItem("profileUser");
     const statusProfileUser = localStorage.getItem("statusProfileUser");
-
-    if (token && profileUser) {
-      dispatch(userLogin({ token, status }));
-      dispatch(userProfile({ profileUser: JSON.parse(profileUser), status: statusProfileUser }));
-    }
-  }, [dispatch]);
-
-  useEffect(() => {
+    const rememberMe = localStorage.getItem('remerberMe')
     const newUserName = localStorage.getItem("newUserName");
 
-    if (newUserName) {
-      dispatch(changeUserName(newUserName));
+    if (token && profileUser && rememberMe) {
+      dispatch(userLogin({ token, status }));
+      dispatch(userProfile({ profileUser: JSON.parse(profileUser), status: statusProfileUser }));
+      dispatch(remerberMe(true))
+      if(newUserName) {
+        dispatch(changeUserName(newUserName));
+      }
     }
-  });
-
+  }, [dispatch]);
+  
   return (
     <BrowserRouter>
       <div className="App">

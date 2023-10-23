@@ -16,6 +16,10 @@ export const userSlice = createSlice({
             state.isConnected = true
             state.errorLogin = false
         },
+        remerberMe: (state) => {
+            state.remerberMe = true
+            localStorage.setItem("remerberMe", true)
+        },
         userLoginError: (state, action) => {
             state.LoginError = action.payload
             state.errorLogin = true
@@ -34,6 +38,6 @@ export const userSlice = createSlice({
     }
 })
 
-export const {userLogin, userLogout, userProfile, userLoginError, changeUserName} = userSlice.actions
+export const {userLogin, userLogout, userProfile, userLoginError, changeUserName, remerberMe} = userSlice.actions
 
 export default userSlice.reducer
