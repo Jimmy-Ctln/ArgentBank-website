@@ -1,10 +1,29 @@
 .hero {
-  background-image: url("../../assets/img/bank-tree.jpeg");
+  background-image: url("../../assets/img/bank-tree/bank-tree-1650w.jpeg");
   background-position: 0 -50px;
   background-size: cover;
   background-repeat: no-repeat;
   height: 300px;
   position: relative;
+  width: 100%;
+}
+
+@media (max-width: 1200px) {
+  .hero{
+    background-image: url("../../assets/img/bank-tree/bank-tree-1200w.jpg");
+  }
+}
+
+@media (max-width: 768px) {
+  .hero{
+    background-image: url("../../assets/img/bank-tree/bank-tree-768w.jpg");
+  }
+}
+
+@media (max-width: 500px) {
+  .hero{
+    background-image: url("../../assets/img/bank-tree/bank-tree-500w.jpg");
+  }
 }
 
 .hero-content {

@@ -19,6 +19,7 @@
 .main-nav-item {
   display: flex;
   gap: 05px;
+  font-size: 90%;
   text-decoration: none;
   margin-right: 0.5rem;
 }
@@ -35,11 +36,19 @@
 .main-nav-logo-image {
   max-width: 100%;
   width: 200px;
+  min-width: 100px;
 }
 
 .container-nav {
   display: flex;
   cursor: pointer;
   font-weight: bold;
-  
+}
+
+@media (max-width: 450px) {
+  .container-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
 }
