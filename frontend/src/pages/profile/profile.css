@@ -60,14 +60,14 @@ button {
 
 .btn-save {
   cursor: pointer;
-  width: 10%;
+  width: 100px;
   background-color: #06d6a0;
   border-radius: 5px;
 }
 
 .btn-cancle {
   cursor: pointer;
-  width: 10%;
+  width: 100px;
   background-color: #06d6a0;
   border-radius: 5px;
   padding: 10px 8px;
