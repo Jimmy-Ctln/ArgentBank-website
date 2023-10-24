@@ -5,17 +5,13 @@ import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux/es/hooks/useSelector";
 import { useNavigate } from "react-router-dom";
 import apiServiceInstance from "../../api-service";
-import {
-  userLogin,
-  userLoginError,
-  remerberMe,
-} from "../../features/userSlice";
+import {userLogin, userLoginError, remerberMe } from "../../features/userSlice";
 
 export function Login() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const user = useSelector((state) => state.userSlice);
   const form = useRef();
-  const navigate = useNavigate();
   const [remember, setRemember] = useState(false);
 
   const handleRemember = () => {
