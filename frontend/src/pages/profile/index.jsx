@@ -1,5 +1,5 @@
 import "./profile.css";
-import { Account } from "../../account";
+import { Account } from "../../components/account";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux/es/hooks/useSelector";
 import { useState, useEffect } from "react";
@@ -7,13 +7,14 @@ import { userProfile } from "../../features/userSlice";
 import apiServiceInstance from "../../api-service";
 
 import { ProfileHeader } from "../../components/profileHeader";
-import { ProfileForm } from "../../components/ProfileForm";
+import { ProfileForm } from "../../components/profileForm";
 
 export function Profile() {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.userSlice);
-  const [displayForm, setDisplayForm] = useState(false);
   const userNameDisplay = user.newUserName ? user.newUserName : user.profileUser ? user.profileUser.userName : "loading...";
+  
+  const [displayForm, setDisplayForm] = useState(false);
   
   const handleClickEdit = () => {
     setDisplayForm(true);

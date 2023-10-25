@@ -27,11 +27,7 @@ export function ProfileForm({ user, userNameDisplay, setDisplayForm }) {
     } else {
       const modifyUserName = async () => {
         try {
-          const res = await apiServiceInstance.put(
-            "/profile",
-            postData,
-            user.token
-          );
+          const res = await apiServiceInstance.put("/profile", postData, user.token);
           const status = res.status;
 
           if (status === 200) {

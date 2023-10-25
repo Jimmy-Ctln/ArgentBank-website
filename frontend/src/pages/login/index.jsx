@@ -10,8 +10,8 @@ import {userLogin, userLoginError, remerberMe } from "../../features/userSlice";
 export function Login() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const user = useSelector((state) => state.userSlice);
   const form = useRef();
+  const user = useSelector((state) => state.userSlice);
   const [remember, setRemember] = useState(false);
 
   const handleRemember = () => {
