@@ -21,7 +21,7 @@ paths:
         - Bearer: []
       tags:
         - Accounts Module
-      summary: Accounts
+      summary: Shows all the user's accounts
       description: API for Account
       produces:
         - application/json
@@ -32,6 +32,10 @@ paths:
             $ref: '#/definitions/AccountsResponse'
         '400':
           description: Invalid Fields
+        '401':
+          description: Unauthorized
+        '404':
+            description: Accounts of user not found
         '500':
           description: Internal Server Error
   /user/accounts/{accountId}:
@@ -40,7 +44,7 @@ paths:
         - Bearer: []
       tags:
         - Accounts Module
-      summary: Account detail
+      summary: Allows you to view information about a specific account
       description: API for retrieving account details
       parameters:
       - in: header
@@ -62,6 +66,10 @@ paths:
             $ref: '#/definitions/Account'
         '400':
           description: Invalid Fields
+        '401':
+          description: Unauthorized
+        '404':
+          description: Account of user not found
         '500':
           description: Internal Server Error
   /user/accounts/{accountId}/transactions:
@@ -70,7 +78,7 @@ paths:
           - Bearer: []
         tags:
           - Accounts Module
-        summary: Account detail
+        summary: Allows you to view all the transactions in an account
         description: API for retrieving account details
         parameters:
         - in: header
@@ -83,6 +91,10 @@ paths:
           type: integer
           description: ID of the account
           required: true
+        - in: query
+          name: month
+          type: string
+          description: Allows you to view all transactions for the current month
         produces:
           - application/json
         responses:
@@ -92,6 +104,10 @@ paths:
               $ref: '#/definitions/AccountWithTransactionsResponse'
           '400':
             description: Invalid Fields
+          '401':
+            description: Unauthorized
+          '404':
+            description: transactions of account not found
           '500':
             description: Internal Server Error
   /user/accounts/{accountId}/transactions/{transactionId}:
@@ -100,7 +116,7 @@ paths:
           - Bearer: []
         tags:
           - Accounts Module
-        summary: Account detail
+        summary: Allows you to view an account transaction
         description: API for retrieving account details
         parameters:
         - in: header
@@ -127,6 +143,10 @@ paths:
               $ref: '#/definitions/Transaction'
           '400':
             description: Invalid Fields
+          '401':
+            description: Unauthorized
+          '404':
+            description: transaction of account not found
           '500':
             description: Internal Server Error
   /user/accounts/{accountId}/transactions/{transactionId}/{categoryId}:
@@ -161,7 +181,7 @@ paths:
         - Bearer: []
       tags:
         - Accounts Module
-      summary: Change the transaction category
+      summary: Allows you to change the category of a transaction
       description: API for change the transaction category
       produces:
         - application/merge-patch+json
@@ -172,6 +192,8 @@ paths:
             $ref: '#/definitions/Transaction'
         '400':
           description: Invalid Fields
+        '401':
+          description: Unauthorized
         '500':
           description: Internal Server Error
   /user/accounts/{accountId}/transactions/{transactionId}/note:
@@ -201,17 +223,19 @@ paths:
         - Bearer: []
       tags:
         - Accounts Module
-      summary: Change the transaction category
+      summary: Allows you to change the note of a transaction
       description: API for change the transaction category
       produces:
         - application/merge-patch+json
       responses:
         '200':
-          description: The category has been modified
+          description: The note has been modified
           schema:
             $ref: '#/definitions/Transaction'
         '400':
           description: Invalid Fields
+        '401':
+          description: Unauthorized
         '500':
           description: Internal Server Error
 securityDefinitions:
@@ -219,7 +243,6 @@ securityDefinitions:
     type: apiKey
     name: Authorization
     in: header
-
 
 definitions:
 
@@ -243,11 +266,18 @@ definitions:
       balance:
         type: number
         description: account balance
+      transactions:
+        type: array
+        items:
+          $ref: "#/definitions/Transactions"
+        description: Array of transactions
         
         
   AccountWithTransactionsResponse:
     type: object
     properties:
+      AccountId:
+        type: number
       transactions:
         type: array
         items:
@@ -258,7 +288,7 @@ definitions:
     properties:
       transactionId:
         type: number
-      date:
+      month:
         type: number
         description: transaction date
       description:
@@ -284,7 +314,13 @@ definitions:
               type: string
       note:
         type: string
-
+        
+  Transactions:
+    type: object
+    properties:
+        transactionId:
+          type: number
+          description: Transaction ID
         
   Category:
     type: object
