@@ -33,9 +33,9 @@ export function ProfileForm({ user, userNameDisplay, setDisplayForm }) {
           if (status === 200) {
             dispatch(changeUserName(postData.userName));
             setDisplayForm(false);
-            if (remerberMe) {
-              localStorage.setItem("newUserName", postData.userName);
-            }
+            localStorage.setItem("newUserName", postData.userName);
+            // if (remerberMe) {
+            // }
           }
         } catch (error) {
           console.log("Error when changing name use: ", error);

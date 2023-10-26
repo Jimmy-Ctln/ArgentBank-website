@@ -15,9 +15,10 @@ export const userSlice = createSlice({
       state.isConnected = true;
       state.errorLogin = false;
     },
-    remerberMe: (state) => {
+    remerberMe: (state, action) => {
       state.remerberMe = true;
-      localStorage.setItem("remerberMe", true);
+      state.rememberUser = action.payload
+      sessionStorage.setItem("remerberMe", true);
     },
     userLoginError: (state, action) => {
       state.LoginError = action.payload;

@@ -5,13 +5,15 @@ import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux/es/hooks/useSelector";
 import { useNavigate } from "react-router-dom";
 import apiServiceInstance from "../../api-service";
-import {userLogin, userLoginError, remerberMe } from "../../redux/features/userSlice";
+import { userLogin, userLoginError, remerberMe } from "../../redux/features/userSlice";
 
 export function Login() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const form = useRef();
   const user = useSelector((state) => state.userSlice);
+  const rememberUser = sessionStorage.getItem("postData");
+  const userData = JSON.parse(rememberUser);
   const [remember, setRemember] = useState(false);
 
   const handleRemember = () => {
@@ -36,10 +38,12 @@ export function Login() {
           if (status === 200) {
             dispatch(userLogin({ token, status }));
             navigate("/profile");
+            localStorage.setItem("token", token);
+            localStorage.setItem("statusLogin", status);
+            sessionStorage.clear();
             if (remember) {
-              localStorage.setItem("token", token);
-              localStorage.setItem("statusLogin", status);
-              dispatch(remerberMe(true));
+              dispatch(remerberMe(JSON.stringify(postData)));
+              sessionStorage.setItem("postData", JSON.stringify(postData));
             }
           }
         })
@@ -50,6 +54,7 @@ export function Login() {
             })
           );
           console.log("Connection error :", error);
+          setRemember(false);
         });
     };
     userFetch();
@@ -77,7 +82,12 @@ export function Login() {
                 <input type="password" id="password" />
               </div>
               <div className="input-remember">
-                <input type="checkbox" id="remember-me" />
+                <input
+                  type="checkbox"
+                  id="remember-me"
+                  checked={remember}
+                  onChange={handleRemember}
+                />
                 <label htmlFor="remember-me">Remember me</label>
               </div>
               <button className="sign-in-button">Sign In</button>
@@ -87,16 +97,25 @@ export function Login() {
           <form ref={form} onSubmit={(e) => handleForm(e)}>
             <div className="input-wrapper">
               <label htmlFor="username">Email</label>
-              <input type="text" id="username" />
+              <input
+                type="text"
+                id="username"
+                defaultValue={userData ? userData.email : ""}
+              />
             </div>
             <div className="input-wrapper">
               <label htmlFor="password">Password</label>
-              <input type="password" id="password" />
+              <input
+                type="password"
+                id="password"
+                defaultValue={userData ? userData.password : ""}
+              />
             </div>
             <div className="input-remember">
               <input
                 type="checkbox"
                 id="remember-me"
+                checked={remember}
                 onChange={handleRemember}
               />
               <label htmlFor="remember-me">Remember me</label>

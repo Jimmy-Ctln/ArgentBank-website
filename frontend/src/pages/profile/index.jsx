@@ -33,11 +33,9 @@ export function Profile() {
 
             if (status === 200) {
               dispatch(userProfile({ profileUser, status }));
-              if (user.remerberMe) {
-                localStorage.setItem("profileUser",JSON.stringify(profileUser)
+              localStorage.setItem("profileUser",JSON.stringify(profileUser)
                 );
-                localStorage.setItem("statusProfileUser", status);
-              }
+              localStorage.setItem("statusProfileUser", status);
             }
           })
           .catch((error) => {

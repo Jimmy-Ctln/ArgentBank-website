@@ -8,7 +8,7 @@ import { PrivateRoute } from "./utils/privateRoute";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import "./App.css";
-import { userLogin, userProfile, changeUserName, remerberMe } from "./redux/features/userSlice";
+import { userLogin, userProfile, changeUserName } from "./redux/features/userSlice";
 
 export function App() {
   const dispatch = useDispatch();
@@ -18,13 +18,11 @@ export function App() {
     const status = localStorage.getItem("statusLogin");
     const profileUser = localStorage.getItem("profileUser");
     const statusProfileUser = localStorage.getItem("statusProfileUser");
-    const rememberMe = localStorage.getItem('remerberMe')
     const newUserName = localStorage.getItem("newUserName");
 
-    if (token && profileUser && rememberMe) {
+    if (token && profileUser) {
       dispatch(userLogin({ token, status }));
       dispatch(userProfile({ profileUser: JSON.parse(profileUser), status: statusProfileUser }));
-      dispatch(remerberMe(true))
       if(newUserName) {
         dispatch(changeUserName(newUserName));
       }
