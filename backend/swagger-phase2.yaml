@@ -22,7 +22,7 @@ paths:
       tags:
         - Accounts Module
       summary: Shows all the user's accounts
-      description: API for Account
+      description: API for user accounts
       produces:
         - application/json
       responses:
@@ -45,7 +45,7 @@ paths:
       tags:
         - Accounts Module
       summary: Allows you to view information about a specific account
-      description: API for retrieving account details
+      description: API to retrieve the details of the chosen account
       parameters:
       - in: header
         name: token
@@ -79,7 +79,7 @@ paths:
         tags:
           - Accounts Module
         summary: Allows you to view all the transactions in an account
-        description: API for retrieving account details
+        description: API for retrieving account transactions
         parameters:
         - in: header
           name: token
@@ -117,7 +117,7 @@ paths:
         tags:
           - Accounts Module
         summary: Allows you to view an account transaction
-        description: API for retrieving account details
+        description: API to retrieve a selected transaction
         parameters:
         - in: header
           name: token
@@ -224,7 +224,7 @@ paths:
       tags:
         - Accounts Module
       summary: Allows you to change the note of a transaction
-      description: API for change the transaction category
+      description: API for change the transaction note
       produces:
         - application/merge-patch+json
       responses:
@@ -333,9 +333,3 @@ definitions:
     properties:
       note:
         type: "string"
-        
-
-  
-
-
-   
