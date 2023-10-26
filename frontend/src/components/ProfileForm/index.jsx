@@ -2,10 +2,8 @@ import { useRef } from "react";
 import { changeUserName } from "../../redux/features/userSlice";
 import { useDispatch } from "react-redux";
 import apiServiceInstance from "../../api-service";
-import { useSelector } from "react-redux/es/hooks/useSelector";
 
 export function ProfileForm({ user, userNameDisplay, setDisplayForm }) {
-  const remerberMe = useSelector((state) => state.userSlice.remerberMe);
 
   const dispatch = useDispatch();
   const form = useRef();
@@ -34,8 +32,6 @@ export function ProfileForm({ user, userNameDisplay, setDisplayForm }) {
             dispatch(changeUserName(postData.userName));
             setDisplayForm(false);
             localStorage.setItem("newUserName", postData.userName);
-            // if (remerberMe) {
-            // }
           }
         } catch (error) {
           console.log("Error when changing name use: ", error);
