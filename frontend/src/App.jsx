@@ -8,7 +8,7 @@ import { PrivateRoute } from "./utils/privateRoute";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import "./App.css";
-import { userLogin, userProfile, changeUserName, remerberMe } from "./features/userSlice";
+import { userLogin, userProfile, changeUserName, remerberMe } from "./redux/features/userSlice";
 
 export function App() {
   const dispatch = useDispatch();

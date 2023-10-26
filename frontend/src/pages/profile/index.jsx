@@ -3,7 +3,7 @@ import { Account } from "../../components/account";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux/es/hooks/useSelector";
 import { useState, useEffect } from "react";
-import { userProfile } from "../../features/userSlice";
+import { userProfile } from "../../redux/features/userSlice"
 import apiServiceInstance from "../../api-service";
 
 import { ProfileHeader } from "../../components/profileHeader";

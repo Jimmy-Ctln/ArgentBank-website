@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import { changeUserName } from "../../features/userSlice";
+import { changeUserName } from "../../redux/features/userSlice";
 import { useDispatch } from "react-redux";
 import apiServiceInstance from "../../api-service";
 import { useSelector } from "react-redux/es/hooks/useSelector";
@@ -88,7 +88,7 @@ export function ProfileForm({ user, userNameDisplay, setDisplayForm }) {
         <div className="button-form">
           <button className="btn-save">Save</button>
           <button
-            className="btn-cancle"
+            className="btn-cancel"
             type="button"
             onClick={handleClickCancel}
           >

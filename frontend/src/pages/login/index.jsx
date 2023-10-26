@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux/es/hooks/useSelector";
 import { useNavigate } from "react-router-dom";
 import apiServiceInstance from "../../api-service";
-import {userLogin, userLoginError, remerberMe } from "../../features/userSlice";
+import {userLogin, userLoginError, remerberMe } from "../../redux/features/userSlice";
 
 export function Login() {
   const dispatch = useDispatch();

@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import logo from "../../assets/logo/argentBankLogo.png";
-import { userLogout } from "../../features/userSlice";
+import { userLogout } from "../../redux/features/userSlice";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import { faPowerOff } from '@fortawesome/free-solid-svg-icons';
 import { useSelector } from "react-redux/es/hooks/useSelector";
