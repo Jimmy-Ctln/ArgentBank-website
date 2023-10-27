@@ -23,28 +23,27 @@ export function Profile() {
   useEffect(() => {
     const data = {};
     const statusProfileUser = localStorage.getItem("statusProfileUser");
+  
     if (!user.statusProfileUser && !statusProfileUser) {
       const FetchProfileUser = async () => {
-        await apiServiceInstance
-          .post("/profile", data, user.token)
-          .then((res) => {
-            const profileUser = res.body;
-            const status = res.status;
-
-            if (status === 200) {
-              dispatch(userProfile({ profileUser, status }));
-              localStorage.setItem("profileUser",JSON.stringify(profileUser)
-                );
-              localStorage.setItem("statusProfileUser", status);
-            }
-          })
-          .catch((error) => {
-            console.log("error recovering user profile ", error);
-          });
+        try {
+          const res = await apiServiceInstance.post("/profile", data, user.token);
+          const profileUser = res.body;
+          const status = res.status;
+  
+          if (status === 200) {
+            dispatch(userProfile({ profileUser, status }));
+            localStorage.setItem("profileUser", JSON.stringify(profileUser));
+            localStorage.setItem("statusProfileUser", status);
+          }
+        } catch (error) {
+          console.log("error recovering user profile ", error);
+        }
       };
       FetchProfileUser();
     }
   }, [dispatch, user.token, user.statusProfileUser, user.remerberMe]);
+  
 
   return (
     <main className="main bg-dark">

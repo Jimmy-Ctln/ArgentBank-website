@@ -29,33 +29,31 @@ export function Login() {
     };
 
     const userFetch = async () => {
-      await apiServiceInstance
-        .post("/login", postData)
-        .then((res) => {
-          const token = res.body.token;
-          const status = res.status;
-
-          if (status === 200) {
-            dispatch(userLogin({ token, status }));
-            navigate("/profile");
-            localStorage.setItem("token", token);
-            localStorage.setItem("statusLogin", status);
-            sessionStorage.clear();
-            if (remember) {
-              dispatch(remerberMe(JSON.stringify(postData)));
-              sessionStorage.setItem("postData", JSON.stringify(postData));
-            }
+      try {
+        const res = await apiServiceInstance.post("/login", postData);
+        const token = res.body.token;
+        const status = res.status;
+    
+        if (status === 200) {
+          dispatch(userLogin({ token, status }));
+          navigate("/profile");
+          localStorage.setItem("token", token);
+          localStorage.setItem("statusLogin", status);
+          sessionStorage.clear();
+          if (remember) {
+            dispatch(remerberMe(JSON.stringify(postData)));
+            sessionStorage.setItem("postData", JSON.stringify(postData));
           }
-        })
-        .catch((error) => {
-          dispatch(
-            userLoginError({
-              error,
-            })
-          );
-          console.log("Connection error :", error);
-          setRemember(false);
-        });
+        }
+      } catch (error) {
+        dispatch(
+          userLoginError({
+            error,
+          })
+        );
+        console.log("Connection error :", error);
+        setRemember(false);
+      }
     };
     userFetch();
   };
