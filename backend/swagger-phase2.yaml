@@ -197,41 +197,75 @@ paths:
         '500':
           description: Internal Server Error
   /user/accounts/{accountId}/transactions/{transactionId}/note:
-    patch:
+    post:
       parameters:
         - in: header
           name: user token
           type: integer
-          description: token of the account
+          description: Token of the account
           required: true
         - in: path
           name: accountId
           type: integer
-          description: accountId of the account
+          description: Account ID
           required: true
         - in: path
           name: transactionId
           type: integer
-          description: transactionId of the account
+          description: Transaction ID
           required: true
         - in: body
           name: note
-          description: category of the transaction 
-          schema: 
+          description: Category of the transaction
+          schema:
             $ref: '#/definitions/Note'
-      security: 
+      security:
+          - Bearer: []
+      tags:
+          - Accounts Module
+      summary: Allows you to add a note to a transaction
+      description: API for adding a note to a transaction
+      produces:
+          - application/json
+      responses:
+          '200':
+            description: The note has been added to the transaction
+            schema:
+              $ref: '#/definitions/Transaction'
+          '400':
+            description: Invalid Fields
+          '401':
+            description: Unauthorized
+          '500':
+            description: Internal Server Error
+    delete:
+      parameters:
+        - in: header
+          name: user token
+          type: integer
+          description: Token of the account
+          required: true
+        - in: path
+          name: accountId
+          type: integer
+          description: Account ID
+          required: true
+        - in: path
+          name: transactionId
+          type: integer
+          description: Transaction ID
+          required: true
+      security:
         - Bearer: []
       tags:
         - Accounts Module
-      summary: Allows you to change the note of a transaction
-      description: API for change the transaction note
+      summary: Allows you to delete the note of a transaction
+      description: API for deleting the transaction note
       produces:
-        - application/merge-patch+json
+        - application/json
       responses:
-        '200':
-          description: The note has been modified
-          schema:
-            $ref: '#/definitions/Transaction'
+        '204':
+          description: The note has been deleted
         '400':
           description: Invalid Fields
         '401':
