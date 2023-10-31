@@ -216,7 +216,7 @@ paths:
           required: true
         - in: body
           name: note
-          description: Category of the transaction
+          description: note of the transaction
           schema:
             $ref: '#/definitions/Note'
       security:
