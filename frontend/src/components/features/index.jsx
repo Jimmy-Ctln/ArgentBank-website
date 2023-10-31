@@ -1,12 +1,13 @@
 import { FeatureItem } from "../feature-item";
-import iconChat from "../../assets/img/icon-chat.png";
-import iconMoney from "../../assets/img/icon-money.png";
-import iconSecurity from "../../assets/img/icon-security.png";
+import iconChat from "../../assets/img/icon-chat.webp";
+import iconMoney from "../../assets/img/icon-money.webp";
+import iconSecurity from "../../assets/img/icon-security.webp";
 import "./features.css";
 
 export function Features() {
   return (
     <>
+
       <h2 className="sr-only">Features</h2>
       <FeatureItem
         picture={iconChat}

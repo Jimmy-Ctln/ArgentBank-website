@@ -1,5 +1,5 @@
 .hero {
-  background-image: url("../../assets/img/bank-tree/bank-tree-1650w.jpeg");
+  background-image: url("../../assets/img/bank-tree/bank-tree-1650w.webp");
   background-position: 0 -50px;
   background-size: cover;
   background-repeat: no-repeat;
@@ -10,19 +10,19 @@
 
 @media (max-width: 1200px) {
   .hero{
-    background-image: url("../../assets/img/bank-tree/bank-tree-1200w.jpg");
+    background-image: url("../../assets/img/bank-tree/bank-tree-1200w.webp");
   }
 }
 
 @media (max-width: 768px) {
   .hero{
-    background-image: url("../../assets/img/bank-tree/bank-tree-768w.jpg");
+    background-image: url("../../assets/img/bank-tree/bank-tree-768w.webp");
   }
 }
 
 @media (max-width: 500px) {
   .hero{
-    background-image: url("../../assets/img/bank-tree/bank-tree-500w.jpg");
+    background-image: url("../../assets/img/bank-tree/bank-tree-500w.webp");
   }
 }
 
