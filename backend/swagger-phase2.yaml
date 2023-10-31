@@ -313,7 +313,9 @@ definitions:
             label:
               type: string
       note:
-        type: string
+        type: array
+        items:
+          type: string
         
   Transactions:
     type: object
